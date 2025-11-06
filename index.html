@@ -3,47 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Онлайн запись Altegio</title>
+  <title>Онлайн запись</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #open-widget {
+      background-color: #ff4b5c;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #open-widget:hover {
+      background-color: #e63b4a;
+    }
+  </style>
 </head>
-<body style="font-family:sans-serif; text-align:center; padding-top:100px;">
-
-  <h1>Тестовый сайт с виджетом Altegio</h1>
-
-  <!-- Кнопка -->
-  <button id="open-widget-btn" 
-          style="position: fixed; bottom: 30px; right: 30px; 
-                 background-color: #b47b59; color: white; border: none; 
-                 border-radius: 50px; padding: 15px 25px; 
-                 font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-    Онлайн запись
-  </button>
-
-  <!-- Контейнер для виджета -->
-  <div id="altegio-widget-container"></div>
+<body>
+  <h1>Добро пожаловать!</h1>
+  <button id="open-widget">Онлайн запись</button>
 
   <script>
-    document.getElementById('open-widget-btn').addEventListener('click', function () {
-      // Если виджет уже есть — просто открываем
-      if (window.widgetApi) {
-        window.widgetApi.open();
-        return;
+    document.getElementById('open-widget').addEventListener('click', function () {
+      if (!window.widgetScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = 'https://n1385634.alteg.io/widgetJS';
+        script.onload = function () {
+          window.widgetScriptLoaded = true;
+          if (typeof showWidget === 'function') showWidget();
+        };
+        document.body.appendChild(script);
+      } else if (typeof showWidget === 'function') {
+        showWidget();
       }
-
-      // Иначе — создаём его динамически
-      const script = document.createElement('script');
-      script.src = "https://n1385634.alteg.io/widgetJS"; // ТВОЙ адрес виджета
-      script.async = true;
-      document.body.appendChild(script);
-
-      // Проверяем загрузку API
-      const checkWidget = setInterval(() => {
-        if (window.widgetApi) {
-          clearInterval(checkWidget);
-          window.widgetApi.open();
-        }
-      }, 500);
     });
   </script>
-
 </body>
 </html>
