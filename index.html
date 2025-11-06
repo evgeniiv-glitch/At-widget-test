@@ -9,7 +9,7 @@
 
   <h1>Тестовый сайт с виджетом Altegio</h1>
 
-  <!-- Кнопка для открытия -->
+  <!-- Кнопка -->
   <button id="open-widget-btn" 
           style="position: fixed; bottom: 30px; right: 30px; 
                  background-color: #b47b59; color: white; border: none; 
@@ -18,23 +18,31 @@
     Онлайн запись
   </button>
 
-  <!-- Подключаем скрипт виджета -->
-  <script id="altegio-script" src="https://w636414.alteg.io/widgetJS" async></script>
+  <!-- Контейнер для виджета -->
+  <div id="altegio-widget-container"></div>
 
   <script>
-    // Удаляем автооткрытие
-    window.onload = function () {
-      // Ждём, пока библиотека виджета загрузится
+    document.getElementById('open-widget-btn').addEventListener('click', function () {
+      // Если виджет уже есть — просто открываем
+      if (window.widgetApi) {
+        window.widgetApi.open();
+        return;
+      }
+
+      // Иначе — создаём его динамически
+      const script = document.createElement('script');
+      script.src = "https://n1385634.alteg.io/widgetJS"; // ТВОЙ адрес виджета
+      script.async = true;
+      document.body.appendChild(script);
+
+      // Проверяем загрузку API
       const checkWidget = setInterval(() => {
         if (window.widgetApi) {
           clearInterval(checkWidget);
-          // Привязываем кнопку к открытию виджета
-          document.getElementById('open-widget-btn').addEventListener('click', function () {
-            window.widgetApi.open();
-          });
+          window.widgetApi.open();
         }
       }, 500);
-    };
+    });
   </script>
 
 </body>
