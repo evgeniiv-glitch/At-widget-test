@@ -4,38 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Онлайн запись Altegio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #open-widget {
+      background-color: #ff4b5c;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #open-widget:hover {
+      background-color: #e04152;
+    }
+  </style>
 </head>
-<body style="font-family:sans-serif; text-align:center; padding-top:100px;">
-
-  <h1>Тестовый сайт с виджетом Altegio</h1>
-
-  <!-- Кнопка для открытия -->
-  <button id="open-widget-btn" 
-          style="position: fixed; bottom: 30px; right: 30px; 
-                 background-color: #b47b59; color: white; border: none; 
-                 border-radius: 50px; padding: 15px 25px; 
-                 font-size: 16px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-    Онлайн запись
-  </button>
-
-  <!-- Подключаем скрипт виджета -->
-  <script id="altegio-script" src="https://n1385634.alteg.io/widgetJS" async></script>
+<body>
+  <h1>Онлайн запись</h1>
+  <button id="open-widget">Записаться онлайн</button>
 
   <script>
-    // Удаляем автооткрытие
-    window.onload = function () {
-      // Ждём, пока библиотека виджета загрузится
-      const checkWidget = setInterval(() => {
-        if (window.widgetApi) {
-          clearInterval(checkWidget);
-          // Привязываем кнопку к открытию виджета
-          document.getElementById('open-widget-btn').addEventListener('click', function () {
-            window.widgetApi.open();
-          });
+    document.getElementById('open-widget').addEventListener('click', function() {
+      // Проверяем, не добавлен ли уже скрипт, чтобы не загружать повторно
+      if (!document.getElementById('altegio-widget-script')) {
+        const script = document.createElement('script');
+        script.id = 'altegio-widget-script';
+        script.type = 'text/javascript';
+        script.src = 'https://w1385634.alteg.io/widgetJS';
+        script.charset = 'UTF-8';
+        document.body.appendChild(script);
+      } else {
+        // Если скрипт уже загружен, просто открываем виджет
+        if (typeof AltegioWidget !== 'undefined') {
+          AltegioWidget.open();
         }
-      }, 500);
-    };
+      }
+    });
   </script>
-
 </body>
 </html>
