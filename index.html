@@ -1,33 +1,41 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Онлайн-запись Altegio</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-    }
+<!-- Кнопка онлайн-записи -->
+<button id="open-widget" class="booking-button">онлайн запись</button>
 
-    h1 {
-      text-align: center;
-      font-family: Arial, sans-serif;
-      margin: 10px 0;
-    }
+<!-- Скрипт Altegio -->
+<script src="https://n1385634.alteg.io/widgetJS" id="widget-script"></script>
 
-    iframe {
-      display: block;
-      width: 100%;
-      height: calc(100vh - 50px); /* занимает всё окно кроме заголовка */
-      border: none;
+<script>
+  document.getElementById('open-widget').addEventListener('click', function () {
+    if (typeof window.widgetOpen === 'function') {
+      window.widgetOpen();
+    } else {
+      alert("Виджет ещё загружается, попробуйте снова через пару секунд.");
     }
-  </style>
-</head>
-<body>
-  <h1>Онлайн-запись Altegio</h1>
-  <iframe src="https://n1385634.alteg.io"></iframe>
-</body>
-</html>
+  });
+</script>
+
+<!-- Стили для кнопки -->
+<style>
+  .booking-button {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: #a26b55;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 9999;
+  }
+
+  .booking-button:hover {
+    background-color: #c18568;
+    transform: scale(1.05);
+  }
+</style>
