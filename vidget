@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Онлайн запись Altegio</title>
+  <style>
+    /* Стили кнопки снизу справа */
+    #open-widget {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background-color: #b98d6c;
+      color: white;
+      border: none;
+      padding: 18px 22px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    #open-widget:hover {
+      background-color: #a2775a;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка -->
+  <button id="open-widget">Онлайн запись</button>
+
+  <script>
+    document.getElementById('open-widget').addEventListener('click', function() {
+      // Проверяем, не загружен ли уже скрипт
+      if (!document.getElementById('altegio-widget-script')) {
+        const script = document.createElement('script');
+        script.id = 'altegio-widget-script';
+        script.type = 'text/javascript';
+        script.src = 'https://w1385634.alteg.io/widgetJS';
+        script.charset = 'UTF-8';
+
+        // После загрузки открываем виджет
+        script.onload = () => {
+          if (typeof AltegioWidget !== 'undefined') {
+            AltegioWidget.open();
+          } else {
+            console.warn('Виджет не инициализировался');
+          }
+        };
+
+        document.body.appendChild(script);
+      } else {
+        // Если уже загружен, просто открываем
+        if (typeof AltegioWidget !== 'undefined') {
+          AltegioWidget.open();
+        } else {
+          console.warn('Виджет ещё не инициализирован');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
