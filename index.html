@@ -3,10 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <title>Онлайн запись</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .widget-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .widget-button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-  <button onclick="AltegWidget.open()">Записаться онлайн</button>
+  <button class="widget-button" id="openWidgetBtn">Записаться онлайн</button>
 
   <script type="text/javascript" src="https://w1385634.alteg.io/widgetJS" charset="UTF-8"></script>
+  <script>
+    // Ожидаем загрузку виджета
+    document.addEventListener("DOMContentLoaded", function() {
+      const btn = document.getElementById("openWidgetBtn");
+
+      btn.addEventListener("click", function() {
+        if (window.AltegWidget && typeof AltegWidget.open === "function") {
+          AltegWidget.open(); // открываем виджет
+        } else {
+          alert("Виджет ещё не загрузился. Попробуйте через пару секунд.");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
